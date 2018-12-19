@@ -1,0 +1,31 @@
+def gen_data_from_file(file_name):
+    for line in open(file_name):
+        yield line
+
+
+def gen_words(line):
+    for word in (w for w in line.split() if w.strip()):
+        # print(word)
+        yield word
+
+
+def count_words(file_name):
+    word_map = {}
+    for line in gen_data_from_file(file_name):
+        for word in gen_words(line):
+            if word not in word_map:
+                word_map[word] = 0
+            word_map[word] += 1
+    return word_map
+
+
+def count_total_chars(file_name):
+    total = 0
+    for line in gen_data_from_file(file_name):
+        total += len(line)
+    # print(total)
+    return total
+
+
+if __name__ == '__main__':
+    print(count_words('test.txt'), count_total_chars('test.txt'))
